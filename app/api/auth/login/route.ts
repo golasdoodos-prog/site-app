@@ -21,9 +21,9 @@ export async function POST(request: NextRequest) {
     const normalizedEmail = email.toLowerCase().trim();
     console.log('Normalized email:', normalizedEmail);
     
-    const user = await User.findOne({ email: normalizedEmail });
+    const userDoc = await User.findOne({ email: normalizedEmail });
     
-    if (!user) {
+    if (!userDoc) {
       console.log('User not found for email:', normalizedEmail);
       // Проверим, может быть есть пользователь с похожим email (для отладки)
       const allUsers = await User.find({}, { email: 1, _id: 0 }).limit(5);
@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const user = userDoc as IUser;
     console.log('User found:', user.email, 'User ID:', user._id);
     const isMatch = await user.comparePassword(password);
     
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       token,
       user: {
-        _id: (user as IUser)._id.toString(),
+        _id: user._id.toString(),
         email: user.email,
         name: user.name,
         role: user.role,
