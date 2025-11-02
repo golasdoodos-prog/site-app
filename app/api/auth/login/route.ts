@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import User, { IUser } from '@/models/User';
 import { generateToken } from '@/lib/auth';
+import mongoose from 'mongoose';
 
 export async function POST(request: NextRequest) {
   try {
@@ -50,10 +51,12 @@ export async function POST(request: NextRequest) {
 
     const token = generateToken(user);
 
+    const userId = (user._id as mongoose.Types.ObjectId).toString();
+    
     const response = NextResponse.json({
       token,
       user: {
-        _id: user._id.toString(),
+        _id: userId,
         email: user.email,
         name: user.name,
         role: user.role,
