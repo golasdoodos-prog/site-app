@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import { getCurrentUser } from '@/lib/auth';
 import { IUser } from '@/models/User';
+import mongoose from 'mongoose';
 
 export async function GET(request: NextRequest) {
   try {
@@ -16,9 +17,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const userId = ((user as IUser)._id as mongoose.Types.ObjectId).toString();
+    
     return NextResponse.json({
       user: {
-        _id: (user as IUser)._id.toString(),
+        _id: userId,
         email: user.email,
         name: user.name,
         role: user.role,
