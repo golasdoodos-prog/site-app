@@ -91,7 +91,9 @@ export async function DELETE(
     }
 
     // Нельзя удалить самого себя
-    if (targetUser._id.toString() === (user as IUser)._id.toString()) {
+    const targetUserId = (targetUser._id as mongoose.Types.ObjectId).toString();
+    const currentUserId = ((user as IUser)._id as mongoose.Types.ObjectId).toString();
+    if (targetUserId === currentUserId) {
       return NextResponse.json(
         { error: 'Нельзя удалить самого себя' },
         { status: 400 }
