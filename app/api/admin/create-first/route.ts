@@ -4,6 +4,19 @@ import User from '@/models/User';
 
 // ВРЕМЕННЫЙ endpoint для создания первого администратора
 // УДАЛИТЕ ЭТОТ ФАЙЛ ПОСЛЕ СОЗДАНИЯ АДМИНИСТРАТОРА!
+
+// Обработка OPTIONS запроса для CORS
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     await connectDB();
@@ -54,11 +67,25 @@ export async function POST(request: NextRequest) {
         role: admin.role,
       },
       warning: 'ВАЖНО: Удалите файл app/api/admin/create-first/route.ts после использования!'
-    }, { status: 201 });
+    }, { 
+      status: 201,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      },
+    });
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || 'Ошибка сервера' },
-      { status: 500 }
+      { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      }
     );
   }
 }
