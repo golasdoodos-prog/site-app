@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '@/models/User';
+import mongoose from 'mongoose';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
@@ -11,8 +12,9 @@ export interface TokenPayload {
 }
 
 export function generateToken(user: IUser): string {
+  const userId = (user._id as mongoose.Types.ObjectId).toString();
   const payload: TokenPayload = {
-    userId: user._id.toString(),
+    userId: userId,
     email: user.email,
     role: user.role,
   };
