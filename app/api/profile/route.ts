@@ -77,8 +77,10 @@ export async function PATCH(request: NextRequest) {
 
     await targetUser.save();
 
+    const userId = (targetUser._id as mongoose.Types.ObjectId).toString();
+    
     const userResponse = {
-      _id: targetUser._id.toString(),
+      _id: userId,
       email: targetUser.email,
       name: targetUser.name,
       role: targetUser.role,

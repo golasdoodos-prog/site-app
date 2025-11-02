@@ -3,6 +3,7 @@ import connectDB from '@/lib/db';
 import User, { IUser } from '@/models/User';
 import { requireRole } from '@/lib/middleware';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 export async function PATCH(
   request: NextRequest,
@@ -52,8 +53,10 @@ export async function PATCH(
 
     await targetUser.save();
 
+    const userId = (targetUser._id as mongoose.Types.ObjectId).toString();
+    
     const userResponse = {
-      _id: targetUser._id.toString(),
+      _id: userId,
       email: targetUser.email,
       name: targetUser.name,
       role: targetUser.role,

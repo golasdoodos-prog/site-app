@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import User from '@/models/User';
 import { requireRole } from '@/lib/middleware';
+import mongoose from 'mongoose';
 
 export async function GET(request: NextRequest) {
   try {
@@ -64,8 +65,10 @@ export async function POST(request: NextRequest) {
 
     await newUser.save();
 
+    const userId = (newUser._id as mongoose.Types.ObjectId).toString();
+    
     const userResponse = {
-      _id: newUser._id.toString(),
+      _id: userId,
       email: newUser.email,
       name: newUser.name,
       role: newUser.role,
