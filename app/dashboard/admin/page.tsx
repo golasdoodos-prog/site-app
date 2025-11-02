@@ -495,7 +495,7 @@ export default function AdminDashboard() {
         margin: [40, 20, 40, 0],
         columns: [
           {
-            text: 'КГУ "Центр информационных технологий"\nГУ "Управление цифровых технологий области Абай"',
+            text: 'КГУ "Центр информационных технологий" области Абай',
             fontSize: 10,
             color: '#666666',
             alignment: 'left',

@@ -6,7 +6,7 @@ import { AuthProvider } from '@/components/AuthProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'КГУ "Центр информационных технологий" ГУ "Управление цифровых технологий области Абай"',
+  title: 'КГУ "Центр информационных технологий" области Абай',
   description: 'Система управления заявками',
 };
 

@@ -47,7 +47,7 @@ export function Navbar() {
               </svg>
             </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              <span className="hidden lg:inline">КГУ "Центр информационных технологий" ГУ "Управление цифровых технологий области Абай"</span>
+              <span className="hidden lg:inline">КГУ "Центр информационных технологий" области Абай</span>
               <span className="lg:hidden">КГУ "ЦИТ"</span>
             </h1>
           </button>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import { getCurrentUser } from '@/lib/auth';
+import { IUser } from '@/models/User';
 
 export async function GET(request: NextRequest) {
   try {
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       user: {
-        _id: user._id.toString(),
+        _id: (user as IUser)._id.toString(),
         email: user.email,
         name: user.name,
         role: user.role,

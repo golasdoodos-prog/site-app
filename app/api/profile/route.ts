@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
-import User from '@/models/User';
+import User, { IUser } from '@/models/User';
 import { requireAuth } from '@/lib/middleware';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 // GET - получить профиль текущего пользователя
 export async function GET(request: NextRequest) {
@@ -12,7 +13,7 @@ export async function GET(request: NextRequest) {
     const user = await requireAuth(request);
     if (user instanceof NextResponse) return user;
 
-    const userProfile = await User.findById(user._id).select('-password');
+    const userProfile = await User.findById((user as IUser)._id).select('-password');
     
     if (!userProfile) {
       return NextResponse.json(
@@ -40,7 +41,7 @@ export async function PATCH(request: NextRequest) {
 
     const { name, password } = await request.json();
 
-    const targetUser = await User.findById(user._id);
+    const targetUser = await User.findById((user as IUser)._id);
 
     if (!targetUser) {
       return NextResponse.json(

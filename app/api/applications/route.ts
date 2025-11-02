@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Application from '@/models/Application';
 import { requireAuth } from '@/lib/middleware';
+import { IUser } from '@/models/User';
+import mongoose from 'mongoose';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +15,7 @@ export async function GET(request: NextRequest) {
     let applications;
     
     if (user.role === 'user') {
-      applications = await Application.find({ userId: user._id })
+      applications = await Application.find({ userId: (user as IUser)._id as mongoose.Types.ObjectId })
         .sort({ createdAt: -1 })
         .populate('userId', 'name email')
         .populate('adminId', 'name email');
@@ -59,7 +61,7 @@ export async function POST(request: NextRequest) {
     const application = new Application({
       title,
       description,
-      userId: user._id,
+      userId: (user as IUser)._id as mongoose.Types.ObjectId,
     });
 
     await application.save();

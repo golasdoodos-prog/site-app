@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
-import User from '@/models/User';
+import User, { IUser } from '@/models/User';
 import { generateToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     const response = NextResponse.json({
       token,
       user: {
-        _id: user._id.toString(),
+        _id: (user as IUser)._id.toString(),
         email: user.email,
         name: user.name,
         role: user.role,

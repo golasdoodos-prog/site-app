@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
-import User from '@/models/User';
+import User, { IUser } from '@/models/User';
 import { requireRole } from '@/lib/middleware';
 import bcrypt from 'bcryptjs';
 
@@ -88,7 +88,7 @@ export async function DELETE(
     }
 
     // Нельзя удалить самого себя
-    if (targetUser._id.toString() === user._id.toString()) {
+    if (targetUser._id.toString() === (user as IUser)._id.toString()) {
       return NextResponse.json(
         { error: 'Нельзя удалить самого себя' },
         { status: 400 }
