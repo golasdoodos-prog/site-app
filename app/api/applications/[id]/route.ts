@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Application from '@/models/Application';
 import { requireRole } from '@/lib/middleware';
+import { IUser } from '@/models/User';
+import mongoose from 'mongoose';
 
 export async function PATCH(
   request: NextRequest,
@@ -32,7 +34,7 @@ export async function PATCH(
     }
 
     application.status = status;
-    application.adminId = user._id;
+    application.adminId = (user as IUser)._id as mongoose.Types.ObjectId;
     if (adminComment) {
       application.adminComment = adminComment;
     }
